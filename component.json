@@ -3,7 +3,7 @@
   "private": true,
   "repository": "wooorm/levenshtein-edit-distance",
   "dependencies": {
-    "wooorm/levenshtein-edit-distance": "^0.1.0"
+    "wooorm/levenshtein-edit-distance": "^0.1.2"
   },
   "scripts": [
     "index.js"
