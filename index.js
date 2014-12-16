@@ -1,13 +1,38 @@
-var levenshteinEditDistance = require('levenshtein-edit-distance');
-var inputElement = document.getElementsByTagName('input')[0];
-var referenceElement = document.getElementsByTagName('input')[1];
-var outputElement = document.getElementsByTagName('output')[0];
+'use strict';
 
-function getDistance() {
-    outputElement.textContent = levenshteinEditDistance(inputElement.value, referenceElement.value);
+/*
+ * Dependencies.
+ */
+
+var levenshteinEditDistance = require('wooorm/levenshtein-edit-distance@0.1.3');
+
+/*
+ * DOM nodes.
+ */
+
+var $input = document.getElementsByTagName('input')[0];
+var $reference = document.getElementsByTagName('input')[1];
+var $output = document.getElementsByTagName('output')[0];
+
+/*
+ * Handler.
+ */
+
+function onchange() {
+    $output.textContent = levenshteinEditDistance(
+        $input.value, $reference.value
+    );
 }
 
-inputElement.addEventListener('input', getDistance);
-referenceElement.addEventListener('input', getDistance);
+/*
+ * Attach handlers.
+ */
 
-getDistance();
+$input.addEventListener('input', onchange);
+$reference.addEventListener('input', onchange);
+
+/*
+ * Initial answer.
+ */
+
+onchange();
