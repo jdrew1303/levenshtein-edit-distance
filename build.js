@@ -89,7 +89,7 @@
  * Dependencies.
  */
 
-var levenshteinEditDistance = require('wooorm/levenshtein-edit-distance@0.1.3');
+var levenshteinEditDistance = require('wooorm/levenshtein-edit-distance@0.1.4');
 
 /*
  * DOM nodes.
@@ -122,7 +122,7 @@ $reference.addEventListener('input', onchange);
 
 onchange();
 
-}, {"wooorm/levenshtein-edit-distance@0.1.3":2}],
+}, {"wooorm/levenshtein-edit-distance@0.1.4":2}],
 2: [function(require, module, exports) {
 var cache,
     codes;
