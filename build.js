@@ -1,136 +1,29 @@
-(function outer(modules, cache, entries){
-
-  /**
-   * Global
-   */
-
-  var global = (function(){ return this; })();
-
-  /**
-   * Require `name`.
-   *
-   * @param {String} name
-   * @param {Boolean} jumped
-   * @api public
-   */
-
-  function require(name, jumped){
-    if (cache[name]) return cache[name].exports;
-    if (modules[name]) return call(name, require);
-    throw new Error('cannot find module "' + name + '"');
-  }
-
-  /**
-   * Call module `id` and cache it.
-   *
-   * @param {Number} id
-   * @param {Function} require
-   * @return {Function}
-   * @api private
-   */
-
-  function call(id, require){
-    var m = cache[id] = { exports: {} };
-    var mod = modules[id];
-    var name = mod[2];
-    var fn = mod[0];
-
-    fn.call(m.exports, function(req){
-      var dep = modules[id][1][req];
-      return require(dep ? dep : req);
-    }, m, m.exports, outer, modules, cache, entries);
-
-    // expose as `name`.
-    if (name) cache[name] = cache[id];
-
-    return cache[id].exports;
-  }
-
-  /**
-   * Require all entries exposing them on global if needed.
-   */
-
-  for (var id in entries) {
-    if (entries[id]) {
-      global[entries[id]] = require(id);
-    } else {
-      require(id);
-    }
-  }
-
-  /**
-   * Duo flag.
-   */
-
-  require.duo = true;
-
-  /**
-   * Expose cache.
-   */
-
-  require.cache = cache;
-
-  /**
-   * Expose modules
-   */
-
-  require.modules = modules;
-
-  /**
-   * Return newest require.
-   */
-
-   return require;
-})({
-1: [function(require, module, exports) {
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-/*
- * Dependencies.
- */
-
-var levenshteinEditDistance = require('wooorm/levenshtein-edit-distance@0.1.4');
-
-/*
- * DOM nodes.
- */
+var levenshtein = require('levenshtein-edit-distance');
 
 var $input = document.getElementsByTagName('input')[0];
 var $reference = document.getElementsByTagName('input')[1];
 var $output = document.getElementsByTagName('output')[0];
 
-/*
- * Handler.
- */
+$input.addEventListener('input', oninputchange);
+$reference.addEventListener('input', oninputchange);
 
-function onchange() {
-    $output.textContent = levenshteinEditDistance(
-        $input.value, $reference.value
-    );
+oninputchange();
+
+function oninputchange() {
+  $output.textContent = levenshtein($input.value, $reference.value);
 }
 
-/*
- * Attach handlers.
- */
-
-$input.addEventListener('input', onchange);
-$reference.addEventListener('input', onchange);
-
-/*
- * Initial answer.
- */
-
-onchange();
-
-}, {"wooorm/levenshtein-edit-distance@0.1.4":2}],
-2: [function(require, module, exports) {
+},{"levenshtein-edit-distance":2}],2:[function(require,module,exports){
 var cache,
     codes;
 
 cache = [];
 codes = [];
 
-function levenshtein(value, other) {
+function levenshtein(value, other, insensitive) {
     var length,
         lengthOther,
         code,
@@ -153,6 +46,11 @@ function levenshtein(value, other) {
 
     if (lengthOther === 0) {
         return length;
+    }
+
+    if (insensitive) {
+        value = value.toLowerCase();
+        other = other.toLowerCase();
     }
 
     index = 0;
@@ -191,4 +89,4 @@ function levenshtein(value, other) {
 
 module.exports = levenshtein;
 
-}, {}]}, {}, {"1":""})
+},{}]},{},[1]);

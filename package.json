@@ -1,0 +1,13 @@
+{
+  "name": "levenshtein-edit-distance-www",
+  "private": true,
+  "dependencies": {
+    "levenshtein-edit-distance": "^1.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.1"
+  },
+  "scripts": {
+    "build": "browserify index.js > build.js"
+  }
+}
